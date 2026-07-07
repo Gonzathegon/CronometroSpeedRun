@@ -1,33 +1,23 @@
 import 'react-native-gesture-handler';
-import * as React from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 //icons
 import { Ionicons } from '@expo/vector-icons';
-import {Pantalla1} from "./Componentes/pantalla1";
-import {Pantalla2} from "./Componentes/pantalla2"
 
+// PANTALLAS
+import { HomeScreen } from './screens/homeScreen';
+import { TimerScreen } from "./screens/timerScreen";
+import { SettingsScreen } from './screens/settingsScreen';
 
 // navegadores
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-
-
-
-
-
-
-// componentes
-
-
-
-
-
 // ---------- STACK HOME ----------
-const Pantalla1Stack = () => {
+const HomeStack = () => {
 
 
   return (
@@ -39,19 +29,24 @@ const Pantalla1Stack = () => {
           borderBottomColor: '#e6af4a',
         },
         headerTintColor: 'white',
-      }}
-    >
-      <Stack.Screen
-        name="Pantalla1"
-        component={Pantalla1}
-        options={{ title: 'Pantalla 1' }}
-      />
+      }}>
 
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ title: 'Cronometro SpeedRun' }}/>
+
+      <Stack.Screen
+        name="Timer"
+        component={TimerScreen}
+        options={{ title: "Nueva Run" }}
+      />
     </Stack.Navigator>
   );
 };
 
-const Pantalla2Stack = () => {
+//STACKSETTINGS
+const SettingsStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -64,30 +59,19 @@ const Pantalla2Stack = () => {
       }}
     >
       <Stack.Screen
-        name="Pantalla2"
-        component={Pantalla2}
-        options={{ title: 'Pantalla 2' }}
+        name="Settings"
+        component={SettingsScreen}
+        options={{ title: "Configuración" }}
       />
 
-  
+        
     </Stack.Navigator>
   );
 };
 
 
-
-
-
-
-
-
-
 // ---------- APP ----------
 export default function App() {
-
-
-
-
 
   return (
     <NavigationContainer>
@@ -100,42 +84,37 @@ export default function App() {
           tabBarStyle: {
             backgroundColor: 'black',
             borderTopWidth: 1,
-            borderTopColor: '#eee8e88a',
+            borderTopColor: "#333333",
           },
           tabBarActiveTintColor: 'white',
           tabBarInactiveTintColor: 'gray',
-        }}
-      >
+        }}>
+
         <Tab.Screen
-          name="Pantalla1Stack"
-          component={Pantalla1Stack}
-          options={{ title: 'Pantalla 1',
-
-
+          name="HomeStack"
+          component={HomeStack}
+          options={{ title: 'home',
 
             tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
-                name={focused ? 'grid' : 'grid-outline'}
+               name={focused ? "home" : "home-outline"}
               size={size}
-              color={color}
-            />
-          ),
-           }}
-        />
+              color={color}/>
+          ),}}/>
+
         <Tab.Screen
-          name="Pantalla2Stack"
-          component={Pantalla2Stack}
-          options={{ title: 'Pantalla 2',
+          name="SettingsStack"
+          component={SettingsStack}
+          options={{ title: 'settings',
             tabBarIcon: ({ color, size, focused }) => (
           <Ionicons
-            name={focused ? 'grid' : 'grid-outline'}
+            name={focused ? "settings" : "settings-outline"}
             size={size}
             color={color}
           />
         ),
            }}
         />
-
 
       </Tab.Navigator>
     
