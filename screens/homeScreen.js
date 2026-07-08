@@ -30,52 +30,58 @@ useFocusEffect(
 );
 
 return (
-    <SafeAreaView style={styles.container}>
-      <View>
+  <SafeAreaView style={styles.container}>
+    <View>
+      <Text style={styles.title}>SPEEDRUN TIMER</Text>
 
-        <Text style={styles.title}> SPEEDRUN TIMER </Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("Timer")}
+      >
+        <Text style={styles.buttonText}>Nueva Run</Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.button} onPress={() => navigation.navigate("Timer")}> <Text style={styles.buttonText}> Nueva Run </Text>
-        </TouchableOpacity>
-        <FlatList
-    data={runs}
-    keyExtractor={(item) => item.id.toString()}
-    renderItem={({ item }) => (
-        <View style={styles.card}>
+      <FlatList
+        data={runs}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
             <Text style={styles.cardTitle}>{item.game}</Text>
+
             <View>
-    <Text style={styles.cardText}>
-        Tiempo: {formatTime(item.totalTime)}
-    </Text>
+              <Text style={styles.cardText}>
+                Tiempo: {formatTime(item.totalTime)}
+              </Text>
 
-    <Text style={styles.cardText}>
-        {item.date}
-    </Text>
+              <Text style={styles.cardText}>{item.date}</Text>
 
-    {item.checkpointNames?.map((checkpoint, index) => (
-        <Text key={index} style={styles.cardText}>
-            {checkpoint}: {formatTime(item.checkpointTimes[index])}
-        </Text>
-    ))}
-</View>
+              {item.checkpointNames?.map((checkpoint, index) => (
+                <Text key={index} style={styles.cardText}>
+                  {checkpoint}: {formatTime(item.checkpointTimes[index])}
+                </Text>
+              ))}
+            </View>
 
             <TouchableOpacity
-                style={styles.deleteButton}
-                onPress={async () => {
-                    await eliminarRun(item.id);
-                    cargarRuns();
-                }}>
-                <Text style={styles.buttonText}>Eliminar</Text>
+              style={styles.deleteButton}
+              onPress={async () => {
+                await eliminarRun(item.id);
+                cargarRuns();
+              }}
+            >
+              <Text style={styles.buttonText}>Eliminar</Text>
             </TouchableOpacity>
-        </View>
-    )}
-    ListEmptyComponent={<Text style={styles.emptyText}>No hay partidas guardadas</Text>}/>
-
-      </View>
-    </SafeAreaView>
-  );
-};
+          </View>
+        )}
+        ListEmptyComponent={
+          <Text style={styles.emptyText}>
+            No hay partidas guardadas
+          </Text>
+        }
+      />
+    </View>
+  </SafeAreaView>
+);}
 
 const styles = StyleSheet.create({
 
